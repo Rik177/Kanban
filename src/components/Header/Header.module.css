@@ -1,0 +1,32 @@
+.header {
+    background-color: var(--color-bg-header);
+    padding: 10px 0;
+}
+
+.header__container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header__icon {
+    width: 40px;
+    height: 40px;
+}
+
+.header__title {
+    color: var(--color-text-secondary);
+    font-size: 28px;
+}
+
+.header__button {
+    background-color: transparent;
+    display: flex;
+    align-items: center;
+}
+
+.header__button::after {
+    content: url("../../../public/images/arrow.svg");
+    margin-left: 6px;
+
+}

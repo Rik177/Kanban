@@ -1,0 +1,50 @@
+.card {
+    width: 282px;
+    background-color: var(--color-bg-card);
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    padding: 12px;
+}
+
+.card__title {
+    font-size: 18px;
+}
+
+.card__data {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin: 15px 0 17px 0;
+}
+
+.card__task {
+    background-color: var(--color-bg-card-task);
+    border-radius: 5px;
+    padding: 7px 9px;
+    font-size: 18px;
+}
+
+.card__button {
+    background-color: transparent;
+    font-size: 18px;
+    color: var(--color-text-add-button);
+
+}
+
+.card__button::before {
+    content: url(../../../public/images/add-icon.svg);
+    margin-right: 4px;
+}
+
+.card__button_submit {
+    background-color: var(--color-bg-submit-button);
+    color: var(--color-text-secondary);
+    border-radius: 5px;
+    padding: 4px 23px;
+}
+
+.card__button_submit::before {
+    display: none;
+}
