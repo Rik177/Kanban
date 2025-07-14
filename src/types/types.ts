@@ -7,7 +7,13 @@ export type CardData = {
     }[]
 }
 
-export type newTask = {
+export type storageProps = {
+    data: CardData[]; 
+    addTaskToCard?: (cardTitle: string, newTask: Task) => void; 
+    moveTaskBetweenCards?: (taskId: string, fromCardId: string, toCardId: Task) => void;
+}
+
+export type Task = {
     id: string;
     name: string;
     description: string;
@@ -20,6 +26,9 @@ export type CardProps = {
         name: string;
         description: string;
     }[]
-    onAddTask?: (cardTitle: string, newTask: newTask) => void;
+    onAddTask?: (cardTitle: string, newTask: Task) => void;
+    onMoveTask?: (fromCardTitle: string, toCardTitle: string, taskToMove: Task) => void;
+    previousCardIssues?: Task[];
+    previousCardTitle?: string;
 }
 
