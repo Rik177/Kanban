@@ -11,6 +11,7 @@ export type storageProps = {
     data: CardData[]; 
     addTaskToCard?: (cardTitle: string, newTask: Task) => void; 
     moveTaskBetweenCards?: (taskId: string, fromCardId: string, toCardId: Task) => void;
+    addDescription?: (selectedTask: Task, newDescription: string) => void;
 }
 
 export type Task = {

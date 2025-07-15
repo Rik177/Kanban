@@ -1,0 +1,20 @@
+.main {
+    flex: 1 0 auto;
+    display: flex;
+    flex-direction: column;
+    padding: 20px 0;
+    background-color: var(--color-bg-main);
+}
+
+.main__container {
+    flex: 1;
+    display: flex;
+    align-items: start;
+    gap: 24px;
+}
+
+.layout {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}

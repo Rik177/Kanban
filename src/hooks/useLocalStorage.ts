@@ -36,6 +36,24 @@ export const useLocalStorage = (key: string, initialData: CardData[]) => {
         updateData(updatedData);
     };
 
+    const addDescriptionToTask = (selectedTask: Task, newDescription: string) => { 
+        const updatedData = data.map((card) => {
+        return {
+            ...card,
+            issues: card.issues.map((task) => {
+                if (task.id === selectedTask.id) {
+                    return { ...task, description: newDescription };
+                }
+                return task;
+            })
+            
+        } 
+        
+    });
+    
+    updateData(updatedData); 
+}
+
     // Функция для перемещения задачи между карточками
     const moveTaskBetweenCards = (fromCardTitle: string, toCardTitle: string, taskToMove: Task) => {
         // Маппинг title карточки к baseId
@@ -72,5 +90,5 @@ export const useLocalStorage = (key: string, initialData: CardData[]) => {
         updateData(updatedData);
     };
 
-    return { data, updateData, addTaskToCard, moveTaskBetweenCards };
+    return { data, updateData, addTaskToCard, moveTaskBetweenCards, addDescriptionToTask };
 }; 

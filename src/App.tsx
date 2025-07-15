@@ -1,7 +1,8 @@
 import './App.css';
-import Header from './components/Header/Header';
+
 import Main from './components/Main/Main';
-import Footer from './components/Footer/Footer';
+import Layout from './layout/Layout'
+
 import Task from './components/Task/Task';
 import dataMock from './mock_data/mockData'
 import { useLocalStorage } from './hooks/useLocalStorage';
@@ -17,20 +18,21 @@ const App: React.FC = () => {
       const initialData = useMemo(() => dataMock, []);
       
       // Используем кастомный хук для работы с localStorage
-      const { data, addTaskToCard, moveTaskBetweenCards } = useLocalStorage('userData', initialData);
+      const { data, addTaskToCard, moveTaskBetweenCards, addDescriptionToTask } = useLocalStorage('userData', initialData);
   
 
 
   return (
     <div className="App">
       <div className="wrapper">
-        <Header />
-        {/* <Main /> */}
+
         <Routes>
-          <Route path="/" element={<Main data={ data } addTaskToCard={ addTaskToCard } moveTaskBetweenCards={ moveTaskBetweenCards } />} />
-          <Route path="/:card/:taskId" element={<Task data={ data } /> } />
+          <Route path='/' element={<Layout />}>
+            <Route index element={<Main data={ data } addTaskToCard={ addTaskToCard } moveTaskBetweenCards={ moveTaskBetweenCards } />} />
+            <Route path="/:card/:taskId" element={<Task data={data} addDescription={ addDescriptionToTask } /> } />
+          </Route>
         </Routes>
-        <Footer /> 
+
       </div>
     </div>
   );
