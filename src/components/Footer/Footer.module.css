@@ -2,3 +2,18 @@
     background-color: var(--color-bg-footer);
     color: var(--color-text-secondary);
 }
+
+.footer__container {
+    display: flex;
+    justify-content: space-between;
+    padding: 17px 21px;
+}
+
+.footer span {
+    font-size: 18px;
+}
+
+.footer__dataStatus {
+    display: flex;
+    column-gap: 36px;
+}

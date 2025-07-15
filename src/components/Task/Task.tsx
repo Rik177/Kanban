@@ -18,6 +18,12 @@ const Task: React.FC<storageProps> = ({ data, addDescription }) => {
         if (foundTask) break;
     }
 
+    useEffect(() => {
+        if (foundTask) {
+            setDescriptionValue(foundTask.description || '');
+        }
+    }, [foundTask]);
+
     if (!foundTask) {
         return <div>Задача не найдена</div>;
     }
@@ -32,7 +38,7 @@ const Task: React.FC<storageProps> = ({ data, addDescription }) => {
         if (foundTask && addDescription) { 
             addDescription(foundTask, descriptionValue);
         }
-        // setIsButtonShowed(false);
+        setIsButtonShowed(false);
     }
 
     const textAreaClickHandler = () => { 
@@ -46,7 +52,7 @@ const Task: React.FC<storageProps> = ({ data, addDescription }) => {
         
         <div className={styles.task}>
             <h2 className={styles.task__title}>{foundTask.name}</h2>
-            <textarea onChange={handleChange} className={styles.task__description} onFocus={textAreaClickHandler} onBlur={textAreaClickHandler}>{foundTask.description}</textarea>
+            <textarea onChange={handleChange} className={styles.task__description} onFocus={textAreaClickHandler} value={descriptionValue}></textarea>
             {isButtonShowed ? (
                 <button className={styles.task__submitButton} onClick={submitValue}>Submit</button>
             ) : null }
