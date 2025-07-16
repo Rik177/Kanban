@@ -1,3 +1,5 @@
+import { ReactElement, ReactNode } from "react";
+
 export type CardData = {
     title: string,
     issues: {
@@ -31,5 +33,10 @@ export type CardProps = {
     onMoveTask?: (fromCardTitle: string, toCardTitle: string, taskToMove: Task) => void;
     previousCardIssues?: Task[];
     previousCardTitle?: string;
+}
+
+export type ChildrenProps = {
+    children: ReactNode,
+    value: CardData[]
 }
 

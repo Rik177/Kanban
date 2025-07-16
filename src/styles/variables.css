@@ -1,6 +1,8 @@
 :root {
     --color-bg-header: #0067A3;
 
+    --color-bg-popup: #FFFFFF;
+
     --color-text-primary: #000000;
     --color-text-secondary: #FFFFFF;
     --color-text-add-button: #5E6C84;

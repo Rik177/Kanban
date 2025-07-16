@@ -1,14 +1,20 @@
 import React from 'react';
 import styles from './Footer.module.css';
+import { useContext } from 'react';
+import DataContext from '../../context/ContextData';
 
 const Footer: React.FC = () => { 
-    const activeTaskValue = false;
-    const finishedTaskValue = false;
+    let activeTaskValue;
+    let finishedTaskValue;
 
     const footerData = {
         userName: 'Rik',
-        year: '2005'
     }
+
+    const context = useContext(DataContext);
+
+    context && (activeTaskValue = context.find(card => card.title === 'Backlog')?.issues.length || 0);
+    context && (finishedTaskValue = context.find(card => card.title === 'Finished')?.issues.length || 0);
 
     return (
         <footer className={ styles.footer }>
@@ -17,7 +23,7 @@ const Footer: React.FC = () => {
                     <span>Active tasks: { activeTaskValue ? activeTaskValue : "No Data" }</span>
                     <span>Finished tasks: { finishedTaskValue ? finishedTaskValue : "No Data" }</span>
                 </section>
-                <span>Kanban board by {`${footerData.userName}, ${footerData.year}`}</span>
+                <span>Kanban board by {`${footerData.userName}, ${new Date().getFullYear()}`}</span>
             </div>
         </footer>
     )

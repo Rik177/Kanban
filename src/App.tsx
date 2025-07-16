@@ -27,7 +27,7 @@ const App: React.FC = () => {
       <div className="wrapper">
 
         <Routes>
-          <Route path='/' element={<Layout />}>
+          <Route path='/' element={<Layout data={ data } />}>
             <Route index element={<Main data={ data } addTaskToCard={ addTaskToCard } moveTaskBetweenCards={ moveTaskBetweenCards } />} />
             <Route path="/:card/:taskId" element={<Task data={data} addDescription={ addDescriptionToTask } /> } />
           </Route>

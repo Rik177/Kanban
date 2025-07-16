@@ -28,5 +28,28 @@
 .header__button::after {
     content: url("../../../public/images/arrow.svg");
     margin-left: 6px;
+    transition: 0.2s;
+}
 
+
+
+.header__button_active::after {
+    rotate: 180deg;
+}
+
+.header__popup {
+    position: absolute;
+    background-color: var(--color-bg-popup);
+    right: 0;
+    padding: 8px;
+}
+
+.styles.header__list{
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+}
+
+.styles.header__listItem {
+    font-size: 14px;
 }
