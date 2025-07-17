@@ -1,19 +1,11 @@
-import React, { use } from 'react';
+import React, { use, useEffect } from 'react';
 import { useState, useCallback } from 'react';
 import styles from './Card.module.css';
 import { CardProps } from '../../types/types';
 import { Link } from 'react-router-dom';
 
-const Card: React.FC<CardProps> = ({ title, issues, onAddTask, onMoveTask, previousCardIssues, previousCardTitle }) => { 
+const Card: React.FC<CardProps> = ({ title, issues, onAddTask, onMoveTask, previousCardIssues, previousCardTitle, isAddPushed, setIsAddPushed, onToggleAdd }) => { 
 
-    //----------------------------------
-    const [isDescriptionOpened, setIsDescriptionOpened] = useState(false);
-
-
-    const descriptionToggle = () => { 
-        setIsDescriptionOpened(a => !a);
-    }
-    //----------------------------------
 
     const [inputValue, setInputValue] = useState('');
 
@@ -39,7 +31,9 @@ const Card: React.FC<CardProps> = ({ title, issues, onAddTask, onMoveTask, previ
         }
     };
 
-    const [isAddPushed, setIsAddPushed] = useState(false);
+
+
+    // const [isAddPushed, setIsAddPushed] = useState(false);
 
     const addNewTask = (name: string) => { 
         const lastTask = issues[issues.length - 1];
@@ -58,13 +52,16 @@ const Card: React.FC<CardProps> = ({ title, issues, onAddTask, onMoveTask, previ
     
 
     //Функционал добавления задачи
-    
-    const addCard = useCallback(() => { 
-        setIsAddPushed(a => !a);
 
-    }, [])
+    const addCard = () => { 
+        onToggleAdd(title);
+    }
 
     const submitHandler = () => { 
+        if (inputValue === '') { 
+            return null;
+        }
+
         const newTask = addNewTask(inputValue);
 
         // Используем функцию из хука для добавления задачи
@@ -83,23 +80,29 @@ const Card: React.FC<CardProps> = ({ title, issues, onAddTask, onMoveTask, previ
         e.key === 'Enter' && submitHandler();
     }
 
+    const [isActive, setIsActive] = useState(false);
 
+    // useEffect(() => { 
+    //     if (previousCardTitle !== 'Backlog' && previousCardIssues?.length === 0) { 
+    //         setIsActive(true);
+    //     }
+    // }, [previousCardTitle, previousCardIssues])
 
     return (
         <article className={ styles.card }>
             <h2 className={ styles.card__title }>{title}</h2>
             <section className={styles.card__data}>
                 {issues.map((task) => (
-                    <Link className={styles.card__task} to={`/${title}/${task.id}`} key={task.id} onClick={ descriptionToggle }>{ task.name }</Link>
+                    <Link className={styles.card__task} to={`/${title}/${task.id}`} key={task.id}>{ task.name }</Link>
                 ))}
                 {title === "Backlog" && isAddPushed && (
                     <input type="text" className={`${styles.card__task} ${styles.card__task_input}`} onChange={ handleInputChange } onKeyDown={keyDownHandler}/>
                 )}
                 {title !== "Backlog" && isAddPushed && (
                     <select className={styles.card__select} onChange={handleSelectChange}>
-                        <option value=""></option>
+                        <option className={ styles.card__option } value=""></option>
                         {previousCardIssues?.map((task) => (
-                            <option key={task.id} value={task.name}>
+                            <option className={ styles.card__option } key={task.id} value={task.name}>
                                 {task.name}
                             </option>
                         ))}
@@ -108,7 +111,7 @@ const Card: React.FC<CardProps> = ({ title, issues, onAddTask, onMoveTask, previ
             </section>
             {isAddPushed
                 ? <button className={`${styles.card__button} ${styles.card__button_submit}`} onClick={submitHandler}>Submit</button>
-                : <button className={styles.card__button} onClick={addCard}>Add card</button>
+                : <button className={styles.card__button} onClick={addCard} disabled={ title !== "Backlog" && (!previousCardIssues || previousCardIssues.length === 0) }>Add card</button>
             }
         </article>
     )

@@ -40,16 +40,33 @@
 .header__popup {
     position: absolute;
     background-color: var(--color-bg-popup);
-    right: 0;
+    right: 9px;
+    top: 61px;
+    width: 134px;
     padding: 8px;
+    border-radius: 5px;
 }
 
-.styles.header__list{
+.header__popup::after {
+    content: "";
+    position: absolute;
+    width: 11px;
+    height: 11px;
+    background-color: inherit;
+    margin-top: -5px;
+    top: 0;
+    right: 43px;
+    transform: rotate(45deg);
+}
+
+.header__list{
     display: flex;
     flex-direction: column;
     align-items: start;
+    row-gap: 3px;
 }
 
-.styles.header__listItem {
-    font-size: 14px;
+.header__listLink:hover {
+    text-decoration: underline;
+    color: var(--color-primary);
 }

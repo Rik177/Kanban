@@ -41,6 +41,14 @@
     margin-right: 4px;
 }
 
+.card__button[disabled] {
+    color: var(--color-text-button-disabled);
+}
+
+.card__button[disabled]::before {
+    opacity: 50%;
+}
+
 .card__button_submit {
     background-color: var(--color-bg-submit-button);
     color: var(--color-text-secondary);
@@ -83,6 +91,7 @@
     width: 100%;
     max-width: 258px;
     position: relative;
+    /* appearance: none; */
 }
 
 .card__select:focus {
@@ -90,20 +99,22 @@
 }
 
 /* Стили для option */
-.card__select option {
+.card__option {
     background-color: var(--color-bg-card-task);
     color: var(--color-text-primary);
     padding: 8px;
-    font-size: 16px;
+    font-size: 18px;
+    border-radius: 0;
+    
 }
 
-.card__select option:hover {
-    background-color: var(--color-primary);
+.card__option:hover {
+    background-color: gray;
     color: var(--color-text-secondary);
 }
 
 /* Пустая опция */
-.card__select option[value=""] {
+.card__option[value=""] {
     color: var(--color-text-secondary);
     font-style: italic;
 }

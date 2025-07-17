@@ -23,8 +23,8 @@ const Header: React.FC = () => {
             {isPopupOpened &&
                 <div className={ styles.header__popup }>
                 <ul className={ styles.header__list }>
-                    <li className={ styles.header__listItem }>Profile</li>
-                    <li className={ styles.header__listItem }>Log Out</li>
+                    <li className={ styles.header__listItem }> <a className={ styles.header__listLink } href="#">Profile</a> </li>
+                    <li className={ styles.header__listItem }> <a className={ styles.header__listLink } href="#">Log Out</a> </li>
                 </ul>
             </div>
             } 
