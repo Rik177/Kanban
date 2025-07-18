@@ -13,8 +13,8 @@ const Footer: React.FC = () => {
 
     const context = useContext(DataContext);
 
-    context && (activeTaskValue = context.find(card => card.title === 'Backlog')?.issues.length || 0);
-    context && (finishedTaskValue = context.find(card => card.title === 'Finished')?.issues.length || 0);
+    context && (activeTaskValue = context.data.find(card => card.title === 'Backlog')?.issues.length || 0);
+    context && (finishedTaskValue = context.data.find(card => card.title === 'Finished')?.issues.length || 0);
 
     return (
         <footer className={ styles.footer }>

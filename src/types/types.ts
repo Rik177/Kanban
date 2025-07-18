@@ -1,4 +1,4 @@
-import { ReactElement, ReactNode, SetStateAction } from "react";
+import { ReactNode } from "react";
 
 export type CardData = {
     title: string,
@@ -7,13 +7,6 @@ export type CardData = {
         name: string;
         description: string;
     }[]
-}
-
-export type storageProps = {
-    data: CardData[]; 
-    addTaskToCard?: (cardTitle: string, newTask: Task) => void; 
-    moveTaskBetweenCards?: (taskId: string, fromCardId: string, toCardId: Task) => void;
-    addDescription?: (selectedTask: Task, newDescription: string) => void;
 }
 
 export type Task = {
@@ -37,6 +30,13 @@ export type CardProps = {
 
 export type ChildrenProps = {
     children: ReactNode,
-    value: CardData[]
+    value: ContextTypes
 }
 
+
+export type ContextTypes = {
+    data: CardData[],
+    addTaskToCard: (cardTitle: string, newTask: Task) => void,
+    moveTaskBetweenCards: (fromCardTitle: string, toCardTitle: string, taskToMove: Task) => void,
+    addDescriptionToTask: (selectedTask: Task, newDescription: string) => void
+}

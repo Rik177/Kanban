@@ -1,19 +1,20 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useParams } from 'react-router-dom';
-import { storageProps } from '../../types/types'
 import styles from './Task.module.css';
 import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import { Task as TaskType } from '../../types/types'
+import { Task as TaskType } from '../../types/types';
+import DataContext from '../../context/ContextData';
 
-const Task: React.FC<storageProps> = ({ data, addDescription }) => { 
+const Task: React.FC = () => { 
     const { taskId } = useParams(); 
     const [descriptionValue, setDescriptionValue] = useState('');
     const [isButtonShowed, setIsButtonShowed] = useState(false);
     
+    const context = useContext(DataContext);
     
     let foundTask: TaskType | undefined;
-    for (const card of data) {
+    for (const card of context!.data) {
         foundTask = card.issues.find(task => task.id === taskId);
         if (foundTask) break;
     }
@@ -35,8 +36,8 @@ const Task: React.FC<storageProps> = ({ data, addDescription }) => {
     }
 
     const submitValue = () => { 
-        if (foundTask && addDescription) { 
-            addDescription(foundTask, descriptionValue);
+        if (foundTask && (context && context.addDescriptionToTask)) { 
+            context.addDescriptionToTask(foundTask, descriptionValue);
         }
         setIsButtonShowed(false);
     }

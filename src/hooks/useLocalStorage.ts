@@ -5,7 +5,7 @@ import { Task } from '../types/types'
 export const useLocalStorage = (key: string, initialData: CardData[]) => {
     const [data, setData] = useState<CardData[]>([]);
 
-    // Загрузка данных при инициализации
+
     useEffect(() => {
         const cachedData = localStorage.getItem(key);
         if (cachedData) {
@@ -16,13 +16,11 @@ export const useLocalStorage = (key: string, initialData: CardData[]) => {
         }
     }, [key, initialData]);
 
-    // Функция для обновления данных
     const updateData = (newData: CardData[]) => {
         setData(newData);
         localStorage.setItem(key, JSON.stringify(newData));
     };
 
-    // Функция для добавления задачи в конкретную карточку
     const addTaskToCard = (cardTitle: string, newTask: Task) => {
         const updatedData = data.map((card) => {
             if (card.title === cardTitle) {
@@ -54,9 +52,8 @@ export const useLocalStorage = (key: string, initialData: CardData[]) => {
     updateData(updatedData); 
 }
 
-    // Функция для перемещения задачи между карточками
     const moveTaskBetweenCards = (fromCardTitle: string, toCardTitle: string, taskToMove: Task) => {
-        // Маппинг title карточки к baseId
+
         const baseIdMap: Record<string, number> = {
             'Backlog': 100000,
             'Ready': 200000,
@@ -65,7 +62,7 @@ export const useLocalStorage = (key: string, initialData: CardData[]) => {
         };
         const updatedData = data.map((card) => {
             if (card.title === fromCardTitle) {
-                // Удаляем задачу из исходной карточки и пересчитываем id
+
                 const filteredIssues = card.issues.filter((task: Task) => task.id !== taskToMove.id);
                 const renumberedIssues = filteredIssues.map((task, idx) => ({
                     ...task,
