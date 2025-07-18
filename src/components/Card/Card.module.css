@@ -1,5 +1,6 @@
 .card {
     width: 282px;
+    max-height: 85vh;
     background-color: var(--color-bg-card);
     border-radius: 10px;
     display: flex;
@@ -9,6 +10,7 @@
     display: flex;
     flex-direction: column;
     align-items: stretch;
+    overflow: auto;
 }
 
 .card__title {
@@ -59,6 +61,11 @@
     opacity: 50%;
 }
 
+.card__button[disabled]:hover {
+    background-color: transparent;
+    cursor: default;
+}
+
 .card__button_submit {
     background-color: var(--color-bg-submit-button);
     color: var(--color-text-secondary);
@@ -92,26 +99,6 @@
     border-color: var(--color-primary);
 }
 
-/* Стили для select */
-.card__select {
-    background-color: var(--color-bg-card-task);
-    border: 1px solid var(--color-border);
-    border-radius: 5px;
-    padding: 7px 9px;
-    font-size: 18px;
-    font-family: inherit;
-    color: var(--color-text-primary);
-    outline: none;
-    cursor: pointer;
-    width: 100%;
-    max-width: 258px;
-    position: relative;
-}
-
-.card__select:focus {
-    border-color: var(--color-primary);
-}
-
 
 
 .dropdown {
@@ -129,6 +116,7 @@
     right: 11px;
     top: 9px;
     transition: 0.2s;
+    pointer-events: none;
 }
 
 .dropdown_opened::after {
@@ -136,16 +124,19 @@
 }
 
 .dropdown__list {
-    position: absolute;
+    position: fixed;
     background-color: inherit;
-    width: 100%;
-    left: 0;
+    width: 258px;
+    /* left: 100px; */
+    margin-left: -9px;
     margin-top: 13px;
     border-radius: inherit;
+    z-index: 10;
 }
 
 .dropdown__option{
     padding: 8px 9px;
+    text-align: left;
 }
 .dropdown__option:first-child {
     border-radius: 5px 5px 0 0;

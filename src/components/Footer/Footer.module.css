@@ -16,9 +16,14 @@
 .footer__dataStatus {
     display: flex;
     column-gap: 36px;
+    justify-content: start;
 }
 
-@media (max-width: 338px) {
+@media (max-width: 575px) {
+    .footer__container {
+        justify-content: space-between;
+    }
+
     .footer__user {
         display: none;
     }

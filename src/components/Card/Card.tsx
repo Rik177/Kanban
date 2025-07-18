@@ -1,5 +1,5 @@
-import React, { use, useEffect } from 'react';
-import { useState, useCallback } from 'react';
+import React from 'react';
+import { useState } from 'react';
 import styles from './Card.module.css';
 import { CardProps } from '../../types/types';
 import { Link } from 'react-router-dom';
@@ -7,9 +7,8 @@ import ClickAwayListener from 'react-click-away-listener';
 
 const Card: React.FC<CardProps> = ({ title, issues, onAddTask, onMoveTask, previousCardIssues, previousCardTitle }) => { 
     const [inputValue, setInputValue] = useState('');
-    // Добавляем состояния для кастомного dropdown
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-    const [selectedValue, setSelectedValue] = useState('');
+
 
     const [isAddPushed, setIsAddPushed] = useState(false);
 
@@ -20,11 +19,9 @@ const Card: React.FC<CardProps> = ({ title, issues, onAddTask, onMoveTask, previ
     const handleDropdownToggle = () => setIsDropdownOpen((prev) => !prev);
 
     const handleOptionClick = (taskName: string) => {
-        setSelectedValue(taskName);
-        setInputValue(taskName); // если нужно для логики
+        setInputValue(taskName); 
         setIsDropdownOpen(false);
 
-        // Если нужно сразу обработать выбор:
         if (taskName && previousCardIssues && previousCardTitle && onMoveTask) {
             const selectedTask = previousCardIssues.find(task => task.name === taskName);
             if (selectedTask) {
@@ -52,7 +49,6 @@ const Card: React.FC<CardProps> = ({ title, issues, onAddTask, onMoveTask, previ
 
     
 
-    //Функционал добавления задачи
 
     const submitHandler = () => { 
         if (inputValue === '') { 
@@ -61,15 +57,12 @@ const Card: React.FC<CardProps> = ({ title, issues, onAddTask, onMoveTask, previ
 
         const newTask = addNewTask(inputValue);
 
-        // Используем функцию из хука для добавления задачи
         if (onAddTask) {
             onAddTask(title, newTask);
         }
 
         setIsAddPushed(a => !a);
-        setInputValue(''); // Очищаем input
-
-        console.log(newTask);
+        setInputValue('');
     }
 
 
@@ -100,7 +93,7 @@ const Card: React.FC<CardProps> = ({ title, issues, onAddTask, onMoveTask, previ
                             onClick={handleDropdownToggle}
                             tabIndex={0}
                         >
-                        {selectedValue || "Выберите задачу"}
+                        Выберите задачу
                     </div>
                     {isDropdownOpen && (
                         <ul className={styles.dropdown__list}>
