@@ -65,17 +65,21 @@ export const useLocalStorage = (key: string, initialData: CardData[]) => {
         };
         const updatedData = data.map((card) => {
             if (card.title === fromCardTitle) {
-                // Удаляем задачу из исходной карточки
+                // Удаляем задачу из исходной карточки и пересчитываем id
+                const filteredIssues = card.issues.filter((task: Task) => task.id !== taskToMove.id);
+                const renumberedIssues = filteredIssues.map((task, idx) => ({
+                    ...task,
+                    id: String(baseIdMap[card.title] + idx)
+                }));
                 return {
                     ...card,
-                    issues: card.issues.filter((task: Task) => task.id !== taskToMove.id)
+                    issues: renumberedIssues
                 };
             } else if (card.title === toCardTitle) {
                 let maxId = 0;
                 if (card.issues.length > 0) {
                     maxId = Math.max(...card.issues.map((task: Task) => Number(task.id)));
                 } else {
-                    // Если задач нет, берем baseId для этой карточки
                     maxId = baseIdMap[toCardTitle] || 0;
                 }
                 const newId = String(maxId + 1);

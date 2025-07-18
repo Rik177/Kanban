@@ -33,9 +33,6 @@ export type CardProps = {
     onMoveTask?: (fromCardTitle: string, toCardTitle: string, taskToMove: Task) => void;
     previousCardIssues?: Task[];
     previousCardTitle?: string;
-    isAddPushed: boolean;
-    setIsAddPushed: React.Dispatch<SetStateAction<string | null | boolean>>;
-    onToggleAdd: (cardTitle: string) => void;
 }
 
 export type ChildrenProps = {

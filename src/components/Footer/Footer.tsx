@@ -20,10 +20,10 @@ const Footer: React.FC = () => {
         <footer className={ styles.footer }>
             <div className={`container ${styles.footer__container}`}>
                 <section className={ styles.footer__dataStatus }>
-                    <span>Active tasks: { activeTaskValue ? activeTaskValue : "No Data" }</span>
-                    <span>Finished tasks: { finishedTaskValue ? finishedTaskValue : "No Data" }</span>
+                    <span className={ styles.footer__data }>Active tasks: { activeTaskValue ? activeTaskValue : "No Data" }</span>
+                    <span className={ styles.footer__data }>Finished tasks: { finishedTaskValue ? finishedTaskValue : "No Data" }</span>
                 </section>
-                <span>Kanban board by {`${footerData.userName}, ${new Date().getFullYear()}`}</span>
+                <span className={ styles.footer__user}>Kanban board by {`${footerData.userName}, ${new Date().getFullYear()}`}</span>
             </div>
         </footer>
     )

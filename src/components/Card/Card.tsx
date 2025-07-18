@@ -3,37 +3,38 @@ import { useState, useCallback } from 'react';
 import styles from './Card.module.css';
 import { CardProps } from '../../types/types';
 import { Link } from 'react-router-dom';
+import ClickAwayListener from 'react-click-away-listener';
 
-const Card: React.FC<CardProps> = ({ title, issues, onAddTask, onMoveTask, previousCardIssues, previousCardTitle, isAddPushed, setIsAddPushed, onToggleAdd }) => { 
-
-
+const Card: React.FC<CardProps> = ({ title, issues, onAddTask, onMoveTask, previousCardIssues, previousCardTitle }) => { 
     const [inputValue, setInputValue] = useState('');
+    // Добавляем состояния для кастомного dropdown
+    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+    const [selectedValue, setSelectedValue] = useState('');
+
+    const [isAddPushed, setIsAddPushed] = useState(false);
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setInputValue(e.target.value); 
     };
 
-    const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        const selectedTaskName = e.target.value;
-        setInputValue(selectedTaskName);
-        
-        if (selectedTaskName && previousCardIssues && previousCardTitle && onMoveTask) {
-            // Находим выбранную задачу в предыдущей карточке
-            const selectedTask = previousCardIssues.find(task => task.name === selectedTaskName);
+    const handleDropdownToggle = () => setIsDropdownOpen((prev) => !prev);
+
+    const handleOptionClick = (taskName: string) => {
+        setSelectedValue(taskName);
+        setInputValue(taskName); // если нужно для логики
+        setIsDropdownOpen(false);
+
+        // Если нужно сразу обработать выбор:
+        if (taskName && previousCardIssues && previousCardTitle && onMoveTask) {
+            const selectedTask = previousCardIssues.find(task => task.name === taskName);
             if (selectedTask) {
-                // Перемещаем задачу из предыдущей карточки в текущую
-                onMoveTask(previousCardTitle, title, selectedTask);
-                
-                // Закрываем режим добавления
-                setIsAddPushed(false);
-                setInputValue('');
+            onMoveTask(previousCardTitle, title, selectedTask);
+            setIsAddPushed(false);
+            setInputValue('');
             }
         }
-    };
+        };
 
-
-
-    // const [isAddPushed, setIsAddPushed] = useState(false);
 
     const addNewTask = (name: string) => { 
         const lastTask = issues[issues.length - 1];
@@ -52,10 +53,6 @@ const Card: React.FC<CardProps> = ({ title, issues, onAddTask, onMoveTask, previ
     
 
     //Функционал добавления задачи
-
-    const addCard = () => { 
-        onToggleAdd(title);
-    }
 
     const submitHandler = () => { 
         if (inputValue === '') { 
@@ -80,40 +77,58 @@ const Card: React.FC<CardProps> = ({ title, issues, onAddTask, onMoveTask, previ
         e.key === 'Enter' && submitHandler();
     }
 
-    const [isActive, setIsActive] = useState(false);
-
-    // useEffect(() => { 
-    //     if (previousCardTitle !== 'Backlog' && previousCardIssues?.length === 0) { 
-    //         setIsActive(true);
-    //     }
-    // }, [previousCardTitle, previousCardIssues])
-
     return (
-        <article className={ styles.card }>
-            <h2 className={ styles.card__title }>{title}</h2>
+        <ClickAwayListener onClickAway={() => setIsAddPushed(false)}>
+            <article className={ styles.card }>
+            <h2 className={styles.card__title}>{title}</h2>
+            
+            
             <section className={styles.card__data}>
-                {issues.map((task) => (
-                    <Link className={styles.card__task} to={`/${title}/${task.id}`} key={task.id}>{ task.name }</Link>
-                ))}
-                {title === "Backlog" && isAddPushed && (
-                    <input type="text" className={`${styles.card__task} ${styles.card__task_input}`} onChange={ handleInputChange } onKeyDown={keyDownHandler}/>
-                )}
-                {title !== "Backlog" && isAddPushed && (
-                    <select className={styles.card__select} onChange={handleSelectChange}>
-                        <option className={ styles.card__option } value=""></option>
-                        {previousCardIssues?.map((task) => (
-                            <option className={ styles.card__option } key={task.id} value={task.name}>
+            {issues.map((task) => (
+                <Link className={styles.card__task} to={`/${title}/${task.id}`} key={task.id}>{ task.name }</Link>
+            ))}
+            {title === "Backlog" && isAddPushed && (
+                
+                <input type="text" className={`${styles.card__task} ${styles.card__task_input}`} onChange={ handleInputChange } onKeyDown={keyDownHandler}/>
+                
+            )}
+            {title !== "Backlog" && isAddPushed && (
+                
+                <div className={`${styles.dropdown} ${isDropdownOpen && styles.dropdown_opened}`}>
+                        <div
+                            className={styles.dropdown__selected}
+                            onClick={handleDropdownToggle}
+                            tabIndex={0}
+                        >
+                        {selectedValue || "Выберите задачу"}
+                    </div>
+                    {isDropdownOpen && (
+                        <ul className={styles.dropdown__list}>
+                            {previousCardIssues?.map((task) => (
+                                <li
+                                    key={task.id}
+                                    className={styles.dropdown__option}
+                                    onClick={() => handleOptionClick(task.name)}
+                                >
                                 {task.name}
-                            </option>
-                        ))}
-                    </select>
-                )}
+                                </li>
+                            ))}
+                        </ul>
+                    )}
+                </div>
+                
+            )}
             </section>
             {isAddPushed
                 ? <button className={`${styles.card__button} ${styles.card__button_submit}`} onClick={submitHandler}>Submit</button>
-                : <button className={styles.card__button} onClick={addCard} disabled={ title !== "Backlog" && (!previousCardIssues || previousCardIssues.length === 0) }>Add card</button>
+                : <button className={`${styles.card__button} ${styles.card__button_add}`} onClick={() => setIsAddPushed(!isAddPushed)} disabled={ title !== "Backlog" && (!previousCardIssues || previousCardIssues.length === 0) }>Add card</button>
             }
-        </article>
+            
+            
+            
+            </article>
+        </ClickAwayListener>
+        
     )
 }
 

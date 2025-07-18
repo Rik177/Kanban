@@ -5,7 +5,7 @@
     display: flex;
     flex-direction: column;
     align-items: start;
-    padding: 12px;
+    padding: 12px 12px 7px;
     display: flex;
     flex-direction: column;
     align-items: stretch;
@@ -33,7 +33,17 @@
     background-color: transparent;
     font-size: 18px;
     color: var(--color-text-add-button);
+    align-self: start;
+    border-radius: 5px;
+    padding: 5px 6px;
+}
 
+.card__button_add {
+    transition: background-color 0.2s;
+}
+
+.card__button_add:hover {
+    background-color: var(--color-bg-add-button-hover);
 }
 
 .card__button::before {
@@ -54,6 +64,11 @@
     color: var(--color-text-secondary);
     border-radius: 5px;
     padding: 4px 23px;
+    transition: background-color 0.2s;
+}
+
+.card__button_submit:hover {
+    background-color: var(--color-bg-submit-button-hover);
 }
 
 .card__button_submit::before {
@@ -91,30 +106,53 @@
     width: 100%;
     max-width: 258px;
     position: relative;
-    /* appearance: none; */
 }
 
 .card__select:focus {
     border-color: var(--color-primary);
 }
 
-/* Стили для option */
-.card__option {
-    background-color: var(--color-bg-card-task);
-    color: var(--color-text-primary);
-    padding: 8px;
-    font-size: 18px;
-    border-radius: 0;
-    
+
+
+.dropdown {
+    background-color: var(--color-bg-dropDown);
+    padding: 8px 9px;
+    border-radius: 5px;
+    cursor: pointer;
+    position: relative;
 }
 
-.card__option:hover {
-    background-color: gray;
-    color: var(--color-text-secondary);
+.dropdown::after {
+    content: url(../../../public/images/dropdown-arrow.svg);
+    position: absolute;
+    right: 11px;
+    top: 9px;
+    transition: 0.2s;
 }
 
-/* Пустая опция */
-.card__option[value=""] {
-    color: var(--color-text-secondary);
-    font-style: italic;
+.dropdown_opened::after {
+    transform: rotate(180deg);
+}
+
+.dropdown__list {
+    position: absolute;
+    background-color: inherit;
+    width: 100%;
+    left: 0;
+    margin-top: 13px;
+    border-radius: inherit;
+}
+
+.dropdown__option{
+    padding: 8px 9px;
+}
+.dropdown__option:first-child {
+    border-radius: 5px 5px 0 0;
+}
+.dropdown__option:last-child {
+    border-radius: 0 0 5px 5px;
+}
+
+.dropdown__option:hover {
+    background-color: var(--color-bg-dropDown-hover);
 }

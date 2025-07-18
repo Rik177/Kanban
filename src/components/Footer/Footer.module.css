@@ -17,3 +17,10 @@
     display: flex;
     column-gap: 36px;
 }
+
+@media (max-width: 338px) {
+    .footer__user {
+        display: none;
+    }
+}
+

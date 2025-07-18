@@ -4,11 +4,6 @@ import { useLocalStorage } from '../../hooks/useLocalStorage';
 import { storageProps } from '../../types/types';
 
 const Main: React.FC<storageProps> = ({ data, addTaskToCard, moveTaskBetweenCards }) => { 
-    const [activeCard, setActiveCard] = useState<string | null | boolean>(false);
-
-    const handleCardActivation = (cardTitle: string) => {
-        setActiveCard(prev => prev === cardTitle ? null : cardTitle);
-    };
 
     return (
         <>
@@ -23,9 +18,6 @@ const Main: React.FC<storageProps> = ({ data, addTaskToCard, moveTaskBetweenCard
                             onMoveTask={moveTaskBetweenCards}
                             previousCardIssues={previousCard?.issues}
                             previousCardTitle={previousCard?.title}
-                            isAddPushed={activeCard === item.title}
-                            setIsAddPushed={setActiveCard}
-                            onToggleAdd={handleCardActivation}
                         />
                     );
                 })}

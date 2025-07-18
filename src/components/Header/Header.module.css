@@ -23,6 +23,7 @@
     background-color: transparent;
     display: flex;
     align-items: center;
+    margin-left: 5px;
 }
 
 .header__button::after {
@@ -69,4 +70,14 @@
 .header__listLink:hover {
     text-decoration: underline;
     color: var(--color-primary);
+}
+
+@media (max-width: 338px) {
+    .header__container {
+        justify-content: end;
+    }
+
+    .header__title {
+        display: none;
+    }
 }
