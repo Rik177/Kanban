@@ -70,6 +70,12 @@
 .header__listLink:hover {
     text-decoration: underline;
     color: var(--color-primary);
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: inherit;
+    font-family: inherit;
+    padding: 0;
 }
 
 @media (max-width: 338px) {

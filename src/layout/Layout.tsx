@@ -3,7 +3,7 @@ import { Outlet } from 'react-router-dom';
 import Header from '../components/Header/Header';
 import Footer from '../components/Footer/Footer';
 import styles from './Layout.module.css';
-import DataContextProvider from '../context/ContextData';
+import { DataContextProvider } from '../context/ContextData';
 
 import { useLocalStorage } from '../hooks/useLocalStorage';
 import { useMemo } from 'react'; 
